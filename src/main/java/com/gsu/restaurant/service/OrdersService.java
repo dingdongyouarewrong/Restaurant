@@ -43,8 +43,21 @@ public class OrdersService {
         ordersRepository.save(order);
     }
 
-    @Autowired
-    public void setReady(long id) {
-        ordersRepository.update(id);
+    public Orders updateReady(long id, boolean ready) {
+        Orders oldOrder = ordersRepository.getOne(id);
+        if (oldOrder!=null) {
+            oldOrder.setReady(ready);
+            return ordersRepository.save(oldOrder);
+        }
+        return null;
+    }
+
+    public Orders updateDelivered(long id, boolean delivered) {
+        Orders oldOrder = ordersRepository.getOne(id);
+        if (oldOrder!=null) {
+            oldOrder.setReady(delivered);
+            return ordersRepository.save(oldOrder);
+        }
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package com.gsu.restaurant;
 
 
+import com.google.gson.Gson;
 import com.gsu.restaurant.model.Orders;
 import com.gsu.restaurant.service.OrdersService;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,32 +16,25 @@ public class ControllerOrders {
         this.ordersService = ordersService;
     }
 
-
     OrdersService ordersService;
-
 
     @GetMapping("/unready_orders")
     public String unready_orders(@RequestParam(value = "name", defaultValue = "World") String name) {
-
         List<Orders> orders = ordersService.getUnreadyOrders();
-        System.out.println("awd");
-        return String.format("Jsonstring");
+        return new Gson().toJson(orders);
     }
 
     @GetMapping("/ready_orders")
     public String ready_orders(@RequestParam(value = "name", defaultValue = "World") String name) {
-
-        String Jsonstring = "[ { \"id\": 1, \"dish\": \"somedishes_ready\" }, { \"id\": 2, \"dish\": \"somedishes_ready\" }, { \"id\": 3, \"dish\": \"somedishes_ready\" }, { \"id\": 4, \"dish\": \"somedishes_ready\" }]";
-
-        return String.format(Jsonstring);
+        List<Orders> orders = ordersService.getUndeliveredOrders();
+        return new Gson().toJson(orders);
     }
 
     @GetMapping("/delivered_orders")
     public String delivered_orders(@RequestParam(value = "name", defaultValue = "World") String name) {
 
-        String Jsonstring = "[ { \"id\": 1, \"dish\": \"somedishes_ready\" }, { \"id\": 2, \"dish\": \"somedishes_ready\" }, { \"id\": 3, \"dish\": \"somedishes_ready\" }, { \"id\": 4, \"dish\": \"somedishes_ready\" }]";
-
-        return String.format(Jsonstring);
+        List<Orders> orders = ordersService.getDeliveredOrders();
+        return new Gson().toJson(orders);
     }
 
     @PostMapping("/add_order")
@@ -51,19 +45,13 @@ public class ControllerOrders {
 
     @PutMapping("/set_delivered")
     public String set_delivered(@RequestBody Orders order) {
-
-        return "{'order':'delivered'}";
+        Orders newOrder = ordersService.updateDelivered(order.getId(), true);
+        return String.valueOf(newOrder.getId());
     }
 
     @PutMapping("/set_ready")
     public String set_ready(@RequestBody Orders order) {
-
-        List<Orders> orders = ordersService.getUnreadyOrders();
-
-        ordersService.setReady(order.getId());
-
-        List<Orders> orders1 = ordersService.getUnreadyOrders();
-
-        return "{'order':'delivered'}";
+        Orders newOrder = ordersService.updateReady(order.getId(), true);
+        return String.valueOf(newOrder.getId());
     }
 }

@@ -31,19 +31,19 @@ public class ControllerOrders {
                 .build();
         ordersService.saveOrder(order);
         order = Orders.builder()
-                .time_of_adding("00-00-0000, 00:00")
-                .price(1).ready(false)
+                .time_of_adding(SAMPLE_TIME)
+                .price(1).ready(true)
                 .delivered(false)
-                .client_name("sample name")
-                .dish_name("samole dish name")
+                .client_name(SAMPLE_NAME)
+                .dish_name(SAMPLE_DISH_NAME)
                 .build();
         ordersService.saveOrder(order);
         order = Orders.builder()
-                .time_of_adding("00-00-0000, 00:00")
-                .price(1).ready(false)
-                .delivered(false)
-                .client_name("sample name")
-                .dish_name("samole dish name")
+                .time_of_adding(SAMPLE_TIME)
+                .price(1).ready(true)
+                .delivered(true)
+                .client_name(SAMPLE_NAME)
+                .dish_name(SAMPLE_DISH_NAME)
                 .build();
         ordersService.saveOrder(order);
 

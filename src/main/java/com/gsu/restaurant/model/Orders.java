@@ -1,9 +1,6 @@
 package com.gsu.restaurant.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +11,8 @@ import javax.persistence.Id;
 @Setter
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Orders {
 
     @Id

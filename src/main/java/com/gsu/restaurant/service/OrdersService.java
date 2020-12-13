@@ -33,7 +33,7 @@ public class OrdersService {
     }
 
     public List<Orders> getUndeliveredOrders() {
-        return ordersRepository.findByDelivered(false);
+        return ordersRepository.findByDeliveredAndReady(false, true);
     }
 
     public List<Orders> getDeliveredOrders() {
@@ -46,7 +46,7 @@ public class OrdersService {
 
     public Orders updateReady(long id, boolean ready) {
         Orders oldOrder = ordersRepository.getOne(id);
-        if (oldOrder!=null) {
+        if (oldOrder!=null && !oldOrder.isDelivered()) {
             oldOrder.setReady(ready);
             return ordersRepository.save(oldOrder);
         }
@@ -55,8 +55,8 @@ public class OrdersService {
 
     public Orders updateDelivered(long id, boolean delivered) {
         Orders oldOrder = ordersRepository.getOne(id);
-        if (oldOrder!=null) {
-            oldOrder.setReady(delivered);
+        if (oldOrder!=null && oldOrder.isReady()) {
+            oldOrder.setDelivered(delivered);
             return ordersRepository.save(oldOrder);
         }
         return null;

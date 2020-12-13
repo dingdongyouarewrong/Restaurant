@@ -13,4 +13,6 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
     List<Orders> findByDelivered(boolean delivered);
 
+    List<Orders> findByDeliveredAndReady(boolean delivered, boolean ready);
+
 }
